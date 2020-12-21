@@ -1,13 +1,1 @@
-
-QT_PARENT :=  /usr/local/
-
-all:
-	c++ -std=c++14 -O2 -Wall -W -D_REENTRANT -fPIE \
-		-I$(QT_PARENT)/include/QtCore \
-		-I$(QT_PARENT)/include/QtGui \
-		-I../src/ \
-		-I. \
-		-framework QtCore \
-		-F /usr/local/lib/ \
-		-o tutorial tutorial.cpp
-
+Makefile.macos
