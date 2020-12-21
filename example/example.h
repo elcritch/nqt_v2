@@ -41,7 +41,7 @@ public /* slots */:
     /* If you're going to use the new connection syntax, no need to do anything else for slots.
        But if you want to use the other connection syntax, or QML, you need to register the slot
        just like so: */
-    // W_SLOT(mySlot)
+    W_SLOT(mySlot)
     /* The W_SLOT has optional arguments that we will see later. It is already much simpler than
        the two CopperSpice macros: CS_SLOT_1 and CS_SLOT_2. Also, CopperSpice slots cannot be
        declared inline in the class definition. */
@@ -49,8 +49,7 @@ public /* slots */:
 public /* signals */:
 
     // Now a signal:
-    void mySignal(const QString &name);
-
+    void mySignal(const QString &name)
     W_SIGNAL(mySignal, name)
     /* Note the absence of semi colon after the signal declaration */
 };

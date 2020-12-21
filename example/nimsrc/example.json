@@ -1,0 +1,13 @@
+{
+"outputFile": "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example",
+"compile":[
+["/Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/stdlib_system.nim.cpp", "clang++ -c -std=gnu++14 -funsigned-char    -I/Users/elcritch/.asdf/installs/nim/1.4.0/lib -I/Volumes/datastore/projects/bessel/exper/nqt_v2/example -o /Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/stdlib_system.nim.cpp.o /Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/stdlib_system.nim.cpp"],
+["/Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/@mexample.nim.cpp", "clang++ -c -std=gnu++14 -funsigned-char    -I/Users/elcritch/.asdf/installs/nim/1.4.0/lib -I/Volumes/datastore/projects/bessel/exper/nqt_v2/example -o /Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/@mexample.nim.cpp.o /Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/@mexample.nim.cpp"]],
+"link":[
+"/Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/stdlib_system.nim.cpp.o",
+"/Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/@mexample.nim.cpp.o"
+],
+"linkcmd": "clang++   -o /Volumes/datastore/projects/bessel/exper/nqt_v2/example/example  /Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/stdlib_system.nim.cpp.o /Volumes/datastore/projects/bessel/exper/nqt_v2/example/nimsrc/@mexample.nim.cpp.o    -ldl",
+"extraCmds": [],
+"stdinInput": false
+}
