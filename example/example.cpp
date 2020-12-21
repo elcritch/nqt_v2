@@ -24,6 +24,6 @@ void aaa(MyObject *obj1) {
 
 int main() {
     MyObject o;
-    // aaa(&o);
+    aaa(&o);
     emit o.mySlot("world"); // Will show the qDebug twice
 }
