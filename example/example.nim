@@ -28,8 +28,8 @@ type
   QString* {.importcpp: "QString", inheritable.} = object of QObject
   MyObject* {.bycopy, inheritable.} = object of QObject 
 
-proc qPrintable*(obj: QObject): QString {.importcpp: "qPrintable".}
-proc qPrintable*(obj: cstring): QString {.importcpp: "qPrintable".}
+proc qPrintable*(obj: QObject): QString {.importcpp: "qPrintable(#)".}
+proc qPrintable*(obj: cstring): QString {.importcpp: "qPrintable(#)".}
 
 proc qDebug*(str: cstring; name: QString) {.importcpp: "qDebug".}
 proc emit*(arg: QObject) {.importcpp: "emit".}

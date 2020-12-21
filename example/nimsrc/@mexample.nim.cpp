@@ -6,6 +6,7 @@
 /* section: NIM_merge_HEADERS */
 
 #include "nimbase.h"
+#include <string.h>
 #undef LANGUAGE_C
 #undef MIPSEB
 #undef MIPSEL
@@ -21,17 +22,113 @@
 #undef unix
 
 /* section: NIM_merge_FRAME_DEFINES */
-#define nimfr_(x, y)
-#define nimln_(x, y)
+  #  define nimfr_(proc, file) \
+      TFrame FR_; \
+      FR_.procname = proc; FR_.filename = file; FR_.line = 0; FR_.len = 0; nimFrame(&FR_);
+
+  #  define nimfrs_(proc, file, slots, length) \
+      struct {TFrame* prev;NCSTRING procname;NI line;NCSTRING filename; NI len; VarSlot s[slots];} FR_; \
+      FR_.procname = proc; FR_.filename = file; FR_.line = 0; FR_.len = length; nimFrame((TFrame*)&FR_);
+
+  #  define nimln_(n, file) \
+      FR_.line = n; FR_.filename = file;
+  
+/* section: NIM_merge_FORWARD_TYPES */
+struct tyObject_MyObject__4Fnh9cjCnfX31B86vOyufSQ;
+struct TNimType;
+struct TNimNode;
+
+/* section: NIM_merge_TYPES */
+typedef NU8 tyEnum_TNimKind__jIBKr1ejBgsfM33Kxw4j7A;
+typedef NU8 tySet_tyEnum_TNimTypeFlag__v8QUszD1sWlSIWZz7mC4bQ;
+typedef N_NIMCALL_PTR(void, tyProc__ojoeKfW4VYIm36I9cpDTQIg) (void* p, NI op);
+typedef N_NIMCALL_PTR(void*, tyProc__WSm2xU5ARYv9aAR4l0z9c9auQ) (void* p);
+struct TNimType {
+NI size;
+NI align;
+tyEnum_TNimKind__jIBKr1ejBgsfM33Kxw4j7A kind;
+tySet_tyEnum_TNimTypeFlag__v8QUszD1sWlSIWZz7mC4bQ flags;
+TNimType* base;
+TNimNode* node;
+void* finalizer;
+tyProc__ojoeKfW4VYIm36I9cpDTQIg marker;
+tyProc__WSm2xU5ARYv9aAR4l0z9c9auQ deepcopy;
+};
+struct tyObject_MyObject__4Fnh9cjCnfX31B86vOyufSQ : public QObject {
+};
 
 /* section: NIM_merge_PROC_HEADERS */
+N_LIB_PRIVATE N_NIMCALL(void, main__yw03pcFNdIlUsBEDEoYhAA)(void);
+static N_INLINE(void, nimZeroMem)(void* p, NI size);
+static N_INLINE(void, nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory)(void* a, int v, NI size);
+N_LIB_PRIVATE N_NIMCALL(QObject, mySlot__8VRZORBcCcq9c6uHvy9c9bZFg)(tyObject_MyObject__4Fnh9cjCnfX31B86vOyufSQ& this_0, NCSTRING name);
+static N_INLINE(void, nimFrame)(TFrame* s);
+N_LIB_PRIVATE N_NOINLINE(void, callDepthLimitReached__mMRdr4sgmnykA9aWeM9aDZlw)(void);
+static N_INLINE(void, popFrame)(void);
 static N_INLINE(void, initStackBottomWith)(void* locals);
 N_LIB_PRIVATE N_NOINLINE(void, nimGC_setStackBottom)(void* theStackBottom);
 N_LIB_PRIVATE N_NIMCALL(void, systemDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, systemInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, NimMainModule)(void);
 
+/* section: NIM_merge_VARS */
+extern TFrame* framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+extern TFrame* framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+extern TFrame* framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+extern TFrame* framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+extern TFrame* framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+extern TFrame* framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+
 /* section: NIM_merge_PROCS */
+static N_INLINE(void, nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory)(void* a, int v, NI size) {
+	void* T1_ = memset(a, v, ((size_t) (size)));
+}
+static N_INLINE(void, nimZeroMem)(void* p, NI size) {
+	nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory(p, ((int) 0), size);
+}
+static N_INLINE(void, nimFrame)(TFrame* s) {
+	{
+		if (!(framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw == NIM_NIL)) goto LA3_;
+{		(*s).calldepth = ((NI16) 0);
+}	}
+	goto LA1_;
+	LA3_: ;
+	{
+		(*s).calldepth = (NI16)((*framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw).calldepth + ((NI16) 1));
+	}
+	LA1_: ;
+	(*s).prev = framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw;
+	framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw = s;
+	{
+		if (!((*s).calldepth == ((NI16) 2000))) goto LA8_;
+{		callDepthLimitReached__mMRdr4sgmnykA9aWeM9aDZlw();
+}	}
+	LA8_: ;
+}
+static N_INLINE(void, popFrame)(void) {
+	framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw = (*framePtr__HRfVMH3jYeBJz6Q6X9b6Ptw).prev;
+}
+N_LIB_PRIVATE N_NIMCALL(QObject, mySlot__8VRZORBcCcq9c6uHvy9c9bZFg)(tyObject_MyObject__4Fnh9cjCnfX31B86vOyufSQ& this_0, NCSTRING name) {
+	QObject result;
+	nimfr_("mySlot", "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example"
+".nim");
+	nimln_(38, "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example"
+".nim");
+	"hello %s".qDebug(qPrintable(name));
+	popFrame();
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(void, main__yw03pcFNdIlUsBEDEoYhAA)(void) {
+	tyObject_MyObject__4Fnh9cjCnfX31B86vOyufSQ o;
+	nimfr_("main", "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example"
+".nim");
+	nimZeroMem((void*)(&o), sizeof(tyObject_MyObject__4Fnh9cjCnfX31B86vOyufSQ));
+	nimln_(46, "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example"
+".nim");
+	QObject T1_ = mySlot__8VRZORBcCcq9c6uHvy9c9bZFg(o, "world");
+	T1_.emit();
+	popFrame();
+}
 static N_INLINE(void, initStackBottomWith)(void* locals) {
 	nimGC_setStackBottom(locals);
 }
@@ -73,6 +170,12 @@ int main(int argc, char** args, char** env) {
 
 N_LIB_PRIVATE N_NIMCALL(void, NimMainModule)(void) {
 {
+	nimfr_("example", "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example"
+".nim");
+	nimln_(48, "/Volumes/datastore/projects/bessel/exper/nqt_v2/example/example"
+".nim");
+	main__yw03pcFNdIlUsBEDEoYhAA();
+	popFrame();
 }
 }
 
