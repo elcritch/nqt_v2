@@ -29,11 +29,20 @@ type
   MyObject* {.bycopy, inheritable.} = object of QObject 
 
 proc qPrintable*(obj: QObject): QString {.importcpp: "qPrintable".}
-proc qDebug*(str: cstring; name: QString) {.importcpp: "qDebug".}
+proc qPrintable*(obj: cstring): QString {.importcpp: "qPrintable".}
 
-proc mySlot*(this: var MyObject; name: QString) =
+proc qDebug*(str: cstring; name: QString) {.importcpp: "qDebug".}
+proc emit*(arg: QObject) {.importcpp: "emit".}
+
+proc mySlot*(this: var MyObject; name: cstring): QObject =
   qDebug("hello %s", qPrintable(name))
 
-proc mySignal*(this: var MyObject; name: QString) =
+proc mySignal*(this: var MyObject; name: cstring): QObject =
   discard "ok"
 
+
+proc main() =
+    var o: MyObject
+    emit o.mySlot("world")
+
+main()
