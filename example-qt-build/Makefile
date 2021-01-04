@@ -50,6 +50,9 @@ STRIP         = strip
 
 OBJECTS_DIR   = ./
 
+clang++ -c -pipe -stdlib=libc++ -O2 -std=gnu++11  -arch x86_64 -isysroot /Applications/apps/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -I. -I. -I/usr/local/Cellar/qt/5.15.0/lib/QtGui.framework/Headers -I/usr/local/Cellar/qt/5.15.0/lib/QtCore.framework/Headers -I. -I/Applications/apps/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/apps/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AGL.framework/Headers -I/usr/local/Cellar/qt/5.15.0/mkspecs/macx-clang -F/usr/local/Cellar/qt/5.15.0/lib -o moc_example-qt-build.o moc_example-qt-build.cpp
+clang++ -stdlib=libc++ -headerpad_max_install_names  -arch x86_64 -isysroot /Applications/apps/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.13 -Wl,-rpath,@executable_path/../Frameworks -o example-qt-build.app/Contents/MacOS/example-qt-build example-qt-build.o moc_example-qt-build.o   -F/usr/local/Cellar/qt/5.15.0/lib -framework QtGui -framework AppKit -framework Metal -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
+
 ####### Files
 
 SOURCES       = example-qt-build.cpp moc_example-qt-build.cpp

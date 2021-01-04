@@ -9,8 +9,6 @@ using ::max_align_t;
 
 } // namespace __1
 } // namespace std
-# 418 "/Applications/apps/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/type_traits" 2 3
-# 422 "/Applications/apps/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/type_traits" 3
 
 namespace std {
 inline namespace __1 {
@@ -36985,9 +36983,11 @@ __attribute__((visibility("default"))) quint64 qFloatDistance(double a,
 # 1308 "/usr/local/include/QtCore/qglobal.h" 2
 # 44 "/usr/local/include/QtCore/qnamespace.h" 2
 
+
 struct QMetaObject;
+
 const QMetaObject *qt_getQtMetaObject() noexcept;
-# 64 "/usr/local/include/QtCore/qnamespace.h"
+
 namespace
 
     Qt {
@@ -39767,7 +39767,7 @@ public:
       : QGenericReturnArgument(aName, static_cast<void *>(&aData)) {}
 };
 
-struct __attribute__((visibility("default"))) QMetaObject {
+struct QMetaObject {
   class Connection;
   const char *className() const;
   const QMetaObject *superClass() const;

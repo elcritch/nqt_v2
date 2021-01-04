@@ -320,7 +320,7 @@ template <typename T, bool> struct IsMetaTypePair;
 template <typename, typename> struct MetaTypeSmartPointerHelper;
 } // namespace QtPrivate
 
-class __attribute__((visibility("default"))) QMetaType {
+class QMetaType {
   enum ExtensionFlag {
     NoExtensionFlags,
     CreateEx = 0x1,
@@ -8716,8 +8716,11 @@ struct MyObject::W_MetaObjectCreatorHelper {
   using ObjectInfo =
       w_internal::ObjectInfo<typename MyObject::W_ThisType, Name>;
 };
+
+
 const QMetaObject MyObject::staticMetaObject =
     w_internal::FriendHelper::createMetaObject<typename MyObject::W_ThisType>();
+
 void MyObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                                   void **_a) {
   w_internal::FriendHelper::qt_static_metacall_impl<MyObject>(_o, _c, _id, _a);

@@ -32,16 +32,27 @@ struct qt_meta_stringdata_MyObject_t {
     )
 static const qt_meta_stringdata_MyObject_t qt_meta_stringdata_MyObject = {
     {
-        QT_MOC_LITERAL(0, 0, 8), // "MyObject"
-        QT_MOC_LITERAL(1, 9, 8), // "mySignal"
-        QT_MOC_LITERAL(2, 18, 0), // ""
-        QT_MOC_LITERAL(3, 19, 4), // "name"
-        QT_MOC_LITERAL(4, 24, 6) // "mySlot"
+QT_MOC_LITERAL(0, 0, 8), // "MyObject"
+QT_MOC_LITERAL(1, 9, 8), // "mySignal"
+QT_MOC_LITERAL(2, 18, 0), // ""
+QT_MOC_LITERAL(3, 19, 4), // "name"
+QT_MOC_LITERAL(4, 24, 6) // "mySlot"
 
     },
     "MyObject\0mySignal\0\0name\0mySlot"
 };
 #undef QT_MOC_LITERAL
+
+static const qt_meta_stringdata_MyObject_t qt_meta_stringdata_MyObject = {
+    {
+        {{{-1}}, 8, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 0 - 0 * sizeof(QByteArrayData))},
+        {{{-1}}, 8, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 9 - 1 * sizeof(QByteArrayData))},
+        {{{-1}}, 0, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 18 - 2 * sizeof(QByteArrayData))},
+        {{{-1}}, 4, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 19 - 3 * sizeof(QByteArrayData))},
+        {{{-1}}, 6, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 24 - 4 * sizeof(QByteArrayData))}
+    },
+    "MyObject\0mySignal\0\0name\0mySlot"
+};
 
 static const uint qt_meta_data_MyObject[] = {
 

@@ -61083,12 +61083,11 @@ struct qt_meta_stringdata_MyObject_t {
 
 static const qt_meta_stringdata_MyObject_t qt_meta_stringdata_MyObject = {
     {
-{ { { -1 } }, 8, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 0 - 0 * sizeof(QByteArrayData)) },
-{ { { -1 } }, 8, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 9 - 1 * sizeof(QByteArrayData)) },
-{ { { -1 } }, 0, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 18 - 2 * sizeof(QByteArrayData)) },
-{ { { -1 } }, 4, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 19 - 3 * sizeof(QByteArrayData)) },
-{ { { -1 } }, 6, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 24 - 4 * sizeof(QByteArrayData)) }
-
+        { { { -1 } }, 8, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 0 - 0 * sizeof(QByteArrayData)) },
+        { { { -1 } }, 8, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 9 - 1 * sizeof(QByteArrayData)) },
+        { { { -1 } }, 0, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 18 - 2 * sizeof(QByteArrayData)) },
+        { { { -1 } }, 4, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 19 - 3 * sizeof(QByteArrayData)) },
+        { { { -1 } }, 6, 0, 0, qptrdiff(__builtin_offsetof(qt_meta_stringdata_MyObject_t, stringdata0) + 24 - 4 * sizeof(QByteArrayData)) }
     },
     "MyObject\0mySignal\0\0name\0mySlot"
 };
