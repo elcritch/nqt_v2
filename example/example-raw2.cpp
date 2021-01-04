@@ -6268,8 +6268,6 @@ namespace QtPrivate {
 
 class MyObject : public QObject
 {
-
-
     using W_ThisType = MyObject;
     static constexpr auto W_UnscopedName = w_internal::viewLiteral("MyObject");
     friend struct w_internal::FriendHelper;
