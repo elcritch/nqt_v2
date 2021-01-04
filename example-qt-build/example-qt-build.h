@@ -30,6 +30,8 @@ class MyObject : public QObject
 {
     Q_OBJECT
 
+    void myMethod(const QString &name) { qDebug("method %s", qPrintable(name)); }
+
 public slots:
 
     // Here we declare a slot:

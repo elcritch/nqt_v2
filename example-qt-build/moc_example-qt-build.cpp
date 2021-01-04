@@ -32,11 +32,11 @@ struct qt_meta_stringdata_MyObject_t {
     )
 static const qt_meta_stringdata_MyObject_t qt_meta_stringdata_MyObject = {
     {
-QT_MOC_LITERAL(0, 0, 8), // "MyObject"
-QT_MOC_LITERAL(1, 9, 8), // "mySignal"
-QT_MOC_LITERAL(2, 18, 0), // ""
-QT_MOC_LITERAL(3, 19, 4), // "name"
-QT_MOC_LITERAL(4, 24, 6) // "mySlot"
+        QT_MOC_LITERAL(0, 0, 8), // "MyObject"
+        QT_MOC_LITERAL(1, 9, 8), // "mySignal"
+        QT_MOC_LITERAL(2, 18, 0), // ""
+        QT_MOC_LITERAL(3, 19, 4), // "name"
+        QT_MOC_LITERAL(4, 24, 6) // "mySlot"
 
     },
     "MyObject\0mySignal\0\0name\0mySlot"
