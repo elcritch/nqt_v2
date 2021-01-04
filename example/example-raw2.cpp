@@ -1502,12 +1502,9 @@ namespace QtPrivate
     template<typename T>
     struct IsQEnumHelper {
         static const T &declval();
-
-
-
-
         enum { Value = sizeof(qt_getEnumMetaObject(declval())) == sizeof(QMetaObject*) };
     };
+
     template<> struct IsQEnumHelper<void> { enum { Value = false }; };
 
     template<typename T, typename Enable = void>
@@ -1515,21 +1512,25 @@ namespace QtPrivate
     {
         static inline const QMetaObject *value() { return nullptr; }
     };
+
     template<>
     struct MetaObjectForType<void>
     {
         static inline const QMetaObject *value() { return nullptr; }
     };
+
     template<typename T>
     struct MetaObjectForType<T*, typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type>
     {
         static inline const QMetaObject *value() { return &T::staticMetaObject; }
     };
+
     template<typename T>
     struct MetaObjectForType<T, typename std::enable_if<IsGadgetHelper<T>::IsGadgetOrDerivedFrom>::type>
     {
         static inline const QMetaObject *value() { return &T::staticMetaObject; }
     };
+
     template<typename T>
     struct MetaObjectForType<T, typename std::enable_if<IsPointerToGadgetHelper<T>::IsGadgetOrDerivedFrom>::type>
     {
@@ -2028,9 +2029,125 @@ struct SharedPointerMetaTypeIdHelper
 
 
 
+ namespace QtPrivate {
+    template<typename T>
+    struct SharedPointerMetaTypeIdHelper<QSharedPointer<T>, true>
+    {
+        enum { Defined = 1 };
+        static int qt_metatype_id()
+        {
+            static QBasicAtomicInt metatype_id = { 0 };
+            if (const int id = metatype_id.loadAcquire()) return id;
+            const char * const cName = T::staticMetaObject.className();
+            QByteArray typeName;
+            typeName.reserve(int(sizeof("QSharedPointer") + 1 + strlen(cName) + 1));
+            typeName.append("QSharedPointer", int(sizeof("QSharedPointer")) - 1)
+                .append('<').append(cName).append('>');
+            const int newId = qRegisterNormalizedMetaType< QSharedPointer<T> >( typeName, reinterpret_cast< QSharedPointer<T> *>(quintptr(-1)));
+            metatype_id.storeRelease(newId);
+            return newId;
+        }
+    };
 
+    template<typename T>
+    struct MetaTypeSmartPointerHelper<QSharedPointer<T> , typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type>
+    {
+        static bool registerConverter(int id)
+        {
+            const int toId = QMetaType::QObjectStar;
+            if (!QMetaType::hasRegisteredConverterFunction(id, toId)) {
+                QtPrivate::QSmartPointerConvertFunctor<QSharedPointer<T> > o;
+                static const QtPrivate::ConverterFunctor<QSharedPointer<T>, QObject*, QSmartPointerConvertFunctor<QSharedPointer<T> > > f(o);
+                return QMetaType::registerConverterFunction(&f, id, toId);
+            }
+            return true;
+        }
+    };
+}
 
- namespace QtPrivate { template<typename T> struct SharedPointerMetaTypeIdHelper<QSharedPointer<T>, true> { enum { Defined = 1 }; static int qt_metatype_id() { static QBasicAtomicInt metatype_id = { 0 }; if (const int id = metatype_id.loadAcquire()) return id; const char * const cName = T::staticMetaObject.className(); QByteArray typeName; typeName.reserve(int(sizeof("QSharedPointer") + 1 + strlen(cName) + 1)); typeName.append("QSharedPointer", int(sizeof("QSharedPointer")) - 1) .append('<').append(cName).append('>'); const int newId = qRegisterNormalizedMetaType< QSharedPointer<T> >( typeName, reinterpret_cast< QSharedPointer<T> *>(quintptr(-1))); metatype_id.storeRelease(newId); return newId; } }; template<typename T> struct MetaTypeSmartPointerHelper<QSharedPointer<T> , typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type> { static bool registerConverter(int id) { const int toId = QMetaType::QObjectStar; if (!QMetaType::hasRegisteredConverterFunction(id, toId)) { QtPrivate::QSmartPointerConvertFunctor<QSharedPointer<T> > o; static const QtPrivate::ConverterFunctor<QSharedPointer<T>, QObject*, QSmartPointerConvertFunctor<QSharedPointer<T> > > f(o); return QMetaType::registerConverterFunction(&f, id, toId); } return true; } }; } template <typename T> struct QMetaTypeId< QSharedPointer<T> > : QtPrivate::SharedPointerMetaTypeIdHelper< QSharedPointer<T>, QtPrivate::IsPointerToTypeDerivedFromQObject<T*>::Value> { }; namespace QtPrivate { template<typename T> struct SharedPointerMetaTypeIdHelper<QWeakPointer<T>, true> { enum { Defined = 1 }; static int qt_metatype_id() { static QBasicAtomicInt metatype_id = { 0 }; if (const int id = metatype_id.loadAcquire()) return id; const char * const cName = T::staticMetaObject.className(); QByteArray typeName; typeName.reserve(int(sizeof("QWeakPointer") + 1 + strlen(cName) + 1)); typeName.append("QWeakPointer", int(sizeof("QWeakPointer")) - 1) .append('<').append(cName).append('>'); const int newId = qRegisterNormalizedMetaType< QWeakPointer<T> >( typeName, reinterpret_cast< QWeakPointer<T> *>(quintptr(-1))); metatype_id.storeRelease(newId); return newId; } }; template<typename T> struct MetaTypeSmartPointerHelper<QWeakPointer<T> , typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type> { static bool registerConverter(int id) { const int toId = QMetaType::QObjectStar; if (!QMetaType::hasRegisteredConverterFunction(id, toId)) { QtPrivate::QSmartPointerConvertFunctor<QWeakPointer<T> > o; static const QtPrivate::ConverterFunctor<QWeakPointer<T>, QObject*, QSmartPointerConvertFunctor<QWeakPointer<T> > > f(o); return QMetaType::registerConverterFunction(&f, id, toId); } return true; } }; } template <typename T> struct QMetaTypeId< QWeakPointer<T> > : QtPrivate::SharedPointerMetaTypeIdHelper< QWeakPointer<T>, QtPrivate::IsPointerToTypeDerivedFromQObject<T*>::Value> { }; namespace QtPrivate { template<typename T> struct SharedPointerMetaTypeIdHelper<QPointer<T>, true> { enum { Defined = 1 }; static int qt_metatype_id() { static QBasicAtomicInt metatype_id = { 0 }; if (const int id = metatype_id.loadAcquire()) return id; const char * const cName = T::staticMetaObject.className(); QByteArray typeName; typeName.reserve(int(sizeof("QPointer") + 1 + strlen(cName) + 1)); typeName.append("QPointer", int(sizeof("QPointer")) - 1) .append('<').append(cName).append('>'); const int newId = qRegisterNormalizedMetaType< QPointer<T> >( typeName, reinterpret_cast< QPointer<T> *>(quintptr(-1))); metatype_id.storeRelease(newId); return newId; } }; template<typename T> struct MetaTypeSmartPointerHelper<QPointer<T> , typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type> { static bool registerConverter(int id) { const int toId = QMetaType::QObjectStar; if (!QMetaType::hasRegisteredConverterFunction(id, toId)) { QtPrivate::QSmartPointerConvertFunctor<QPointer<T> > o; static const QtPrivate::ConverterFunctor<QPointer<T>, QObject*, QSmartPointerConvertFunctor<QPointer<T> > > f(o); return QMetaType::registerConverterFunction(&f, id, toId); } return true; } }; } template <typename T> struct QMetaTypeId< QPointer<T> > : QtPrivate::SharedPointerMetaTypeIdHelper< QPointer<T>, QtPrivate::IsPointerToTypeDerivedFromQObject<T*>::Value> { };
+template <typename T> struct QMetaTypeId< QSharedPointer<T> > : QtPrivate::SharedPointerMetaTypeIdHelper< QSharedPointer<T>, QtPrivate::IsPointerToTypeDerivedFromQObject<T*>::Value>
+{
+};
+
+namespace QtPrivate {
+
+    template<typename T>
+    struct SharedPointerMetaTypeIdHelper<QWeakPointer<T>, true>
+    {
+        enum
+        {
+            Defined = 1
+        };
+        static int qt_metatype_id() {
+            static QBasicAtomicInt metatype_id = { 0 };
+            if (const int id = metatype_id.loadAcquire()) return id;
+            const char * const cName = T::staticMetaObject.className();
+            QByteArray typeName;
+            typeName.reserve(int(sizeof("QWeakPointer") + 1 + strlen(cName) + 1));
+            typeName.append("QWeakPointer", int(sizeof("QWeakPointer")) - 1) .append('<').append(cName).append('>');
+            const int newId = qRegisterNormalizedMetaType< QWeakPointer<T> >( typeName, reinterpret_cast< QWeakPointer<T> *>(quintptr(-1)));
+            metatype_id.storeRelease(newId); return newId;
+        }
+    };
+    
+    template<typename T>
+    struct MetaTypeSmartPointerHelper< QWeakPointer<T>,
+                                        typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type>
+    {
+        static bool registerConverter(int id) {
+            const int toId = QMetaType::QObjectStar;
+            if (!QMetaType::hasRegisteredConverterFunction(id, toId)) {
+                QtPrivate::QSmartPointerConvertFunctor<QWeakPointer<T> > o;
+                static const QtPrivate::ConverterFunctor<QWeakPointer<T>,
+                                                         QObject*,
+                                                         QSmartPointerConvertFunctor<QWeakPointer<T> > > f(o);
+                return QMetaType::registerConverterFunction(&f, id, toId);
+            }
+            return true;
+        }
+    };
+}
+    
+template <typename T>
+struct QMetaTypeId< QWeakPointer<T> > : QtPrivate::SharedPointerMetaTypeIdHelper< QWeakPointer<T>, QtPrivate::IsPointerToTypeDerivedFromQObject<T*>::Value>
+{
+};
+
+namespace QtPrivate {
+
+    template<typename T> struct SharedPointerMetaTypeIdHelper<QPointer<T>, true>
+    {
+        enum { Defined = 1 };
+
+        static int qt_metatype_id() {
+            static QBasicAtomicInt metatype_id = { 0 };
+            if (const int id = metatype_id.loadAcquire()) return id;
+            const char * const cName = T::staticMetaObject.className();
+            QByteArray typeName;
+            typeName.reserve(int(sizeof("QPointer") + 1 + strlen(cName) + 1));
+            typeName.append("QPointer", int(sizeof("QPointer")) - 1) .append('<').append(cName).append('>');
+            const int newId = qRegisterNormalizedMetaType< QPointer<T> >( typeName, reinterpret_cast< QPointer<T> *>(quintptr(-1)));
+            metatype_id.storeRelease(newId);
+            return newId;
+        }
+    };
+
+    template<typename T>
+    struct MetaTypeSmartPointerHelper<QPointer<T> , typename std::enable_if<IsPointerToTypeDerivedFromQObject<T*>::Value>::type>
+    {
+        static bool registerConverter(int id) {
+            const int toId = QMetaType::QObjectStar;
+            if (!QMetaType::hasRegisteredConverterFunction(id, toId)) {
+                QtPrivate::QSmartPointerConvertFunctor<QPointer<T> > o;
+                static const QtPrivate::ConverterFunctor<QPointer<T>, QObject*, QSmartPointerConvertFunctor<QPointer<T> > > f(o);
+                return QMetaType::registerConverterFunction(&f, id, toId);
+            }
+            return true;
+        }
+    };
+}
+
+template <typename T> struct QMetaTypeId< QPointer<T> > : QtPrivate::SharedPointerMetaTypeIdHelper< QPointer<T>, QtPrivate::IsPointerToTypeDerivedFromQObject<T*>::Value> { };
 
 
 
@@ -2274,10 +2391,6 @@ constexpr auto countParsedLiterals(const char (&s)[SN]) {
 template<size_t N, size_t SN>
 constexpr auto viewParsedLiterals(const char (&s)[SN]) -> StringViewArray<N> {
 
-
-
-
-
     auto r = StringViewArray<N>{};
     auto ri = size_t{};
     auto i = 0u;
@@ -2366,9 +2479,6 @@ constexpr auto viewScopedLiterals(const char (&s)[SN]) -> StringViewArray<N> {
     }
 }
 
-
-
-
 enum class PropertyFlags {
     Invalid = 0x00000000,
     Readable = 0x00000001,
@@ -2426,11 +2536,6 @@ namespace W_MethodType {
     constexpr w_internal::W_MethodFlags<0x08> Slot{};
     constexpr w_internal::W_MethodFlags<0x0c> Constructor{};
 }
-
-
-
-
-
 
 constexpr w_internal::W_MethodFlags<0x10> W_Compat{};
 constexpr w_internal::W_MethodFlags<0x40> W_Scriptable{};
@@ -5809,18 +5914,36 @@ public:
 };
 
 
-class __attribute__((visibility("default"))) QObject
+class QObject
 {
     public:
- static const QMetaObject staticMetaObject; virtual const QMetaObject *metaObject() const; virtual void *qt_metacast(const char *); virtual int qt_metacall(QMetaObject::Call, int, void **); static inline QString tr(const char *s, const char *c = nullptr, int n = -1) { return staticMetaObject.tr(s, c, n); } __attribute__ ((__deprecated__)) static inline QString trUtf8(const char *s, const char *c = nullptr, int n = -1) { return staticMetaObject.tr(s, c, n); } private: __attribute__((visibility("hidden"))) static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **);
- struct QPrivateSignal {};
+        static const QMetaObject staticMetaObject;
+        virtual const QMetaObject *metaObject() const;
+        virtual void *qt_metacast(const char *);
+        virtual int qt_metacall(QMetaObject::Call, int, void **);
+
+        static inline QString tr(const char *s, const char *c = nullptr, int n = -1)
+        {
+            return staticMetaObject.tr(s, c, n);
+        }
+
+        static inline QString trUtf8(const char *s, const char *c = nullptr, int n = -1)
+        {
+            return staticMetaObject.tr(s, c, n);
+        }
+
+        private:
+            static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **);
+            struct QPrivateSignal {};
 
 
-    inline QObjectPrivate* d_func() {
- return reinterpret_cast<QObjectPrivate *>(qGetPtrHelper(d_ptr));
- } inline const QObjectPrivate* d_func() const {
- return reinterpret_cast<const QObjectPrivate *>(qGetPtrHelper(d_ptr));
- } friend class QObjectPrivate;
+            inline QObjectPrivate* d_func() {
+                return reinterpret_cast<QObjectPrivate *>(qGetPtrHelper(d_ptr));
+            }
+            inline const QObjectPrivate* d_func() const {
+                return reinterpret_cast<const QObjectPrivate *>(qGetPtrHelper(d_ptr));
+            }
+            friend class QObjectPrivate;
 
 public:
                 explicit QObject(QObject *parent=nullptr);
@@ -7021,7 +7144,11 @@ typename MetaDataBuilder<T, index_sequence<Is...>>::MetaDataType MetaDataBuilder
 
 
 template<typename T>
-static constexpr auto parentMetaObject(int) -> decltype(&T::W_BaseType::staticMetaObject) { return &T::W_BaseType::staticMetaObject; }
+static constexpr auto parentMetaObject(int) -> decltype(&T::W_BaseType::staticMetaObject)
+{
+    return &T::W_BaseType::staticMetaObject;
+}
+
 template<typename T>
 static constexpr const QMetaObject *parentMetaObject(...) { return nullptr; }
 
