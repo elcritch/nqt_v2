@@ -2,13 +2,6 @@
 #include "example-qt-build.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
-#if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'example-qt-build.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.15.0. It"
-#error "cannot be used with the include files from this version of Qt."
-#error "(The moc has changed too much.)"
-#endif
 
 
 QT_BEGIN_MOC_NAMESPACE
@@ -42,16 +35,16 @@ struct NQtObject extends Base {
       QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
   }
 
-  void *MyObject::qt_metacast(const char *calllname)
+  void* qt_metacast(const char *calllname)
   {
     if (!calllname)
       return nullptr;
     if (!strcmp(calllname, NMetaStringData.stringdata0))
-      return staticcallast<void *>(this);
+      return static_cast<void *>(this);
     return QObject::qt_metacast(calllname);
   }
 
-  int MyObject::qt_metacall(QMetaObject::Call call, int id, void **args)
+  int qt_metacall(QMetaObject::Call call, int id, void **args)
   {
     id = QObject::qt_metacall(call, id, args);
     if (id < 0)
