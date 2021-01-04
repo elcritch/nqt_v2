@@ -1,4 +1,3 @@
-
 #include <memory>
 #include "example-qt-build.h"
 #include <QtCore/qbytearray.h>
@@ -16,32 +15,25 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 
-template <class Base, NMetaData, NMetaCall, NQtObjectFunc>
+template <class Base, NMetaStringData, NMetaCall, NQtObjectFunc>
 struct NQtObject extends Base {
 
-  void qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+  void qt_static_metacall(QObject *rawobj, QMetaObject::Call call, int id, void **args)
   {
-    if (_c == QMetaObject::InvokeMetaMethod)
-    {
-      auto *_t = static_cast<NQtObject *>(_o);
-      NMetaCall(_t, _id, _a);
-    }
-    else if (_c == QMetaObject::IndexOfMethod)
-    {
-      int *result = reinterpret_cast<int *>(_a[0]);
-      NMetaCall(result, _a[1]);
-    }
+    auto *obj = static_cast<NQtObject *>(rawobj);
+    NMetaCall(obj, call, id, args);
   }
 
   QT_INIT_METAOBJECT const QMetaObject NQtObject::staticMetaObject = {
-    {
-      QMetaObject::SuperData::link<QObject::staticMetaObject>(),
-      qt_meta_stringdata_MyObject.data,
-      qt_meta_data_MyObject,
-      qt_static_metacall,
-      nullptr,
-      nullptr
-    }
+      {
+        QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+        NMetaStringData.data,
+        NMetaStringData,
+        qt_static_metacall,
+        nullptr,
+        nullptr
+      },
+      NMetaStringDataRaw
   };
 
   const QMetaObject *MyObject::metaObject() const
@@ -50,33 +42,33 @@ struct NQtObject extends Base {
       QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
   }
 
-  void *MyObject::qt_metacast(const char *_clname)
+  void *MyObject::qt_metacast(const char *calllname)
   {
-    if (!_clname)
+    if (!calllname)
       return nullptr;
-    if (!strcmp(_clname, NMetaData.stringdata0))
-      return static_cast<void *>(this);
-    return QObject::qt_metacast(_clname);
+    if (!strcmp(calllname, NMetaStringData.stringdata0))
+      return staticcallast<void *>(this);
+    return QObject::qt_metacast(calllname);
   }
 
-  int MyObject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+  int MyObject::qt_metacall(QMetaObject::Call call, int id, void **args)
   {
-    _id = QObject::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-      return _id;
-    if (_c == QMetaObject::InvokeMetaMethod)
+    id = QObject::qt_metacall(call, id, args);
+    if (id < 0)
+      return id;
+    if (call == QMetaObject::InvokeMetaMethod)
     {
-      if (_id < 2)
-        qt_static_metacall(this, _c, _id, _a);
-      _id -= 2;
+      if (id < 2)
+        qt_static_metacall(this, call, id, args);
+      id -= 2;
     }
-    else if (_c == QMetaObject::RegisterMethodArgumentMetaType)
+    else if (call == QMetaObject::RegisterMethodArgumentMetaType)
     {
-      if (_id < 2)
-        *reinterpret_cast<int *>(_a[0]) = -1;
-      _id -= 2;
+      if (id < 2)
+        *reinterpretcallast<int *>(args[0]) = -1;
+      id -= 2;
     }
-    return _id;
+    return id;
   }
 
 };
