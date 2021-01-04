@@ -37,11 +37,15 @@ QT_MOC_LITERAL(1, 9, 8), // "mySignal"
 QT_MOC_LITERAL(2, 18, 0), // ""
 QT_MOC_LITERAL(3, 19, 4), // "name"
 QT_MOC_LITERAL(4, 24, 6) // "mySlot"
-
     },
     "MyObject\0mySignal\0\0name\0mySlot"
 };
 #undef QT_MOC_LITERAL
+
+#define Q_STATIC_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(size, offset) \
+    {                                                                    \
+        Q_REFCOUNT_INITIALIZE_STATIC, size, 0, 0, offset                 \
+    }
 
 static const qt_meta_stringdata_MyObject_t qt_meta_stringdata_MyObject = {
     {

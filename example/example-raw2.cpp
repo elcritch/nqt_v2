@@ -66673,8 +66673,8 @@ struct FriendHelper {
     } else if (_c == QMetaObject::IndexOfMethod) {
 
       auto r = int{-1};
-      ordered2<int>({(r += (1 + indexOfMethod<T, MethI>(
-                                    reinterpret_cast<void **>(_a[1]))))...});
+      ordered2<int>({(r += (1 + indexOfMethod<T, MethI>( reinterpret_cast<void **>(_a[1]))
+                                    ))...});
       *reinterpret_cast<int *>(_a[0]) = r;
 
     } else if (_c == QMetaObject::CreateInstance) {
